@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="AppCtrl">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!--New-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--New-->
+
+    <meta charset="UTF-8">
+    <title>Roster Project</title>
+</head>
+<body>
+    <div class = "container" ng-app = "myApp" ng-controller="NavCtrl">
+        <button class = "btn btn-default" ng-click="navToIndex()">Index</button>
+        <button class = "btn btn-default" ng-click="navToTeamMgmt()">Team Management</button>
+        <button class = "btn btn-default" ng-click ="navToPlayerMgmt()">Player Management</button>
+    </div>
+
+    <div class="container" ng-controller="PlayerCtrl" ng-app="myApp">
+        <h1>Player Management</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Player Name</th>
+                    <!--<th>&nbsp;</th> -->
+                    <th>Action</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr>
+                    <td>&nbsp;</td>
+                    <!--<td><input class = "form control" ng-model="team._id"></td>-->
+                    <td><input class = "form control" ng-model="player.name"></td>
+                    <td><button class = "btn btn-primary" ng-click = "addPlayer()">Quick Add</button></td>
+                    <td><button class = "btn btn-info" ng-click = "updatePlayer(team, player)">Update</button></td>
+                    <td><button class = "btn btn-info" ng-click = "deselectPlayer()">Clear</button></td>
+                </tr>
+                <tr ng-repeat="player in playerlist">
+                    <td>&nbsp;</td>
+                    <td> <button class = "btn btn-success" ng-click="playerStatsModal(player._id)" data-toggle = "modal" data-target="#modal-player-stats">{{player.name}}</button></td>
+                    <td><button class = "btn btn-info" data-toggle="modal" data-target="#modal-player-trader" ng-click="clickedTrade(player._id)">Trade</button></td>
+                    <td><button class = "btn btn-warning" ng-click ="editPlayer(player._id)">Edit</button></td>
+                    <td><button class = "btn btn-danger" ng-click="removePlayer(player._id)">Delete</button></td>
+                </tr>
+            </tbody>  
+        </table>
+        <button class="btn btn-warning" ng-click="newPlayerDetails()" data-toggle="modal" data-target="#modal-new-player-details">New Player Details</button>
+    </div>
+
+    <div class="container" ng-controller="PlayerCtrl"  ng-app="myApp">
+        <div class="modal" id="modal-new-player-details">
+            <div class = "modal-dialog">
+                <div class = "modal-content">
+                    <div class="modal-header">
+                        <button type="button" class ="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title"> Add New Player with Stats</h3>
+                    </div>
+                    <table class="table" id="statsTable">
+                        <thead>
+                           <!-- <tr>
+                                <td>_id: </td>                            
+                                <td>{{playerObject._id}}</td> 
+                            </tr>  -->
+                            <tr>
+                                <td>Name: </td>                            
+                                <!--<td>{{playerObject.name}}</t/d>--> 
+                                <td><input class = "form control" ng-model="playerObject.name" placeholder=Name></td>                            
+                            </tr>
+                            <!--<tr>
+                                <td>Team ID: </td>                            
+                                <td>{{playerObject.team_id}}</td>
+                            </tr> -->
+                            <!--<tr>
+                                <td>Team Name: </td>                            
+                                <td>{{playerObject.team_name}}</td>
+
+                            </tr> -->
+                            <tr>
+                                <td>Position: </td>                            
+                                <!--<td>{{playerObject.position}}</td> -->
+                                <td><input class="form control" ng-model="playerObject.position" placeholder=Position></td>                            
+                            </tr>
+                            <tr>
+                                <td>Height (in.): </td>                            
+                                <!--<td>{{playerObject.height}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.height" placeholder=Height></td>                             
+                            </tr>
+                            <tr>
+                                <td>Weight (lbs): </td>                            
+                                <!--<td>{{playerObject.weight}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.weight" placeholder=Weight></td>                            
+                            </tr>
+                            <tr>
+                                <td>Batting Average: </td>                            
+                                <!--<td>{{playerObject.battingAverage}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.battingAverage" placeholder=Batting Average></td>                            
+                            </tr>                       
+                        </thead>
+                        <button class="btn btn-primary" ng-click="updatePlayer(team, playerObject)">Save</button>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-controller="PlayerCtrl"  ng-app="myApp">
+        <div class="modal" id="modal-player-trader">
+            <div class = "modal-dialog">
+                <div class = "modal-content">
+                    <div class="modal-header">
+                        <button type="button" class ="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title"> Player Trader for {{playerObject.name}}</h3>
+                    </div>
+                    <table class="table" id="tblGrid">
+                        <thead>
+                            <tr ng-repeat = "team in teamlist">
+                                <td><button class = "btn btn-primary" ng-click="updatePlayer(team, playerObject)">{{team.name}}</button></td>                            
+                            </tr>
+                        </thead>
+                    </table>          
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" ng-controller="PlayerCtrl">
+        <div class="modal" id="modal-player-stats">
+            <div class = "modal-dialog">
+                <div class = "modal-content">
+                    <div class="modal-header">
+                        <button type="button" class ="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title"> Player Stats for {{playerObject.name}}</h3>
+                    </div>
+                    <table class="table" id="statsTable">
+                        <thead>
+                            <tr>
+                                <!--<td>_id: </td>                            
+                                <td>{{playerObject._id}}</td> -->  
+                            </tr>                    
+                            <tr>
+                                <td>Name: </td>                            
+                                <!--<td>{{playerObject.name}}</t/d>--> 
+                                <td><input class = "form control" ng-model="playerObject.name" placeholder=Name></td>                            
+                            </tr>
+                            <!--<tr>
+                                <td>Team ID: </td>                            
+                                <td>{{playerObject.team_id}}</td>
+
+                            </tr>-->
+                            <tr>
+                                <td>Team Name: </td>                            
+                                <td>{{playerObject.team_name}}</td>
+
+                            </tr>                            
+                            <tr>
+                                <td>Position: </td>                            
+                                <!--<td>{{playerObject.position}}</td> -->
+                                <td><input class="form control" ng-model="playerObject.position" placeholder=Position></td>                            
+                            </tr>
+                            <tr>
+                                <td>Height (in.): </td>                            
+                                <!--<td>{{playerObject.height}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.height" placeholder=Height></td>                             
+                            </tr>
+                            <tr>
+                                <td>Weight (lbs): </td>                            
+                                <!--<td>{{playerObject.weight}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.weight" placeholder=Weight></td>                            
+                            </tr>
+                            <tr>
+                                <td>Batting Average: </td>                            
+                                <!--<td>{{playerObject.battingAverage}}</td>-->
+                                <td><input class="form control" ng-model="playerObject.battingAverage" placeholder=Batting Average></td>                            
+                            </tr>                       
+                        </thead>
+                        <button class="btn btn-primary" ng-click="updatePlayer(team, playerObject)">Save</button>
+                    </table>          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="controllers/controller.js"></script>
+    <script src="controllers/navigation_controller.js"></script>
+    <script src="controllers/player_controller.js"></script>
+    <script src="controllers/team_controller.js"></script>
+
+</body>
+</html>
+
+
