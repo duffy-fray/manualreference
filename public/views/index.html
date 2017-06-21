@@ -1,0 +1,67 @@
+<!--Index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Additions for Modals  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Roster Project</title>
+</head>
+<body>
+    <div class = "container" ng-app = "myApp" ng-controller="NavCtrl">
+        <button class = "btn btn-default" ng-click="navToIndex()">Index</button>
+        <button class = "btn btn-default" ng-click="navToTeamMgmt()">Team Management</button>
+        <button class = "btn btn-default" ng-click ="navToPlayerMgmt()">Player Management</button>
+        <button class = "btn btn-default" ng-click ="nodemailerTestPage()">Nodemailer test</button>
+    </div>
+            
+    <div class="container">
+        <h1>Index</h1>
+        <h7>Select View Above</h7>
+    </div>
+<!--
+    <div class = "container" ng-app = "myApp" ng-controller="AppCtrl">
+        <form name="emailForm">    
+            <div class="group">      
+                <input type="email" name="to" ng-model="email.to" ng-required="true">
+                <label>To</label>
+            </div>
+            <div>      
+                <input type="email" name="from" ng-model="email.from" ng-required="true">
+                <label>From</label>
+            </div>
+            <div>      
+                <input type="text" name="subject" ng-model="email.subject" ng-required="true">
+                <label>Subject</label>
+            </div>
+            <div>      
+                <textarea ng-model="email.text" name="text" placeholder="Enter Text Here.."></textarea>
+            </div>
+
+            <button id="emailSubmitBn" type="submit" ng-click="submitEmail()">
+                Submit
+            </button>
+        </form>
+    </div>
+-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="controllers/controller.js"></script>
+    <script src="controllers/navigation_controller.js"></script>
+    <script src="controllers/player_controller.js"></script>
+    <script src="controllers/team_controller.js"></script>
+    <script src="controllers/emailer.js"></script>
+
+
+</body>
+</html>
+
+
