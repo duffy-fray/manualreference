@@ -149,7 +149,7 @@ app.get('/playerlist/:id', function (req, res){
 });
 
 //  Updates specific player in player database.  Used in player view's "update" button, used in trading modal,
-//  and used when updating player stats in modal
+//  and used when updating player stats from modal
 app.put('/playerlist/:id', function (req, res){
     var id = req.params.id;
     var teamIDUpdate;
